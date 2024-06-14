@@ -12,7 +12,7 @@ This is MPFH (menu program for Hyprland)
 # Installation
 ```bash
 cd
-git clone https://github.com/goryan2101/mpfh
+git clone https://github.com/goryan2101/mpfh.git
 sudo cp setupprogram /bin/bash
 ```
 Add this line to `hyprland.conf`:\
