@@ -3,10 +3,11 @@ This is MPFH (menu program for Hyprland)
 ![зображення](https://github.com/goryan2101/mpfh/assets/153424343/6ce5e4c9-64bd-4f69-93ae-b40992f605bb)
 
 # Dependencies
-`brightnessctl`\
-`pamixer`\
-`python 3.10>`\
-`python-kivy`
+[brightnessctl](https://github.com/Hummer12007/brightnessctl) \
+[pamixer](https://github.com/cdemoulins/pamixer)\
+[foot](https://codeberg.org/dnkl/foot) \
+[python 3.10>](https://python.org)\
+[python-kivy](https://kivy.org)
 
 
 # Installation
