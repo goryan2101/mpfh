@@ -1,3 +1,2 @@
 #!/bin/bash
-
-/bin/python /home/yehor/main.py 
+/bin/python "/home/$USER/main.py"
