@@ -15,7 +15,7 @@ volume_layout = BoxLayout(orientation="vertical")
 volume = Slider(min=0, max=100, value=int(subprocess.run(["pamixer", "--get-volume"], capture_output=True).stdout))
 volume_label = Label(text=str(int(volume.value)), font_size=25)
 bright_layout = BoxLayout(orientation="vertical")
-bright = Slider(min=1, max=255, value=int(subprocess.run(["brightnessctl", "get"], capture_output=True).stdout))
+bright = Slider(min=1, max=int(subprocess.run(["brightnessctl", "max"], capture_output=True).stdout), value=int(subprocess.run(["brightnessctl", "get"], capture_output=True).stdout))
 bright_label = Label(text=str(int(bright.value)), font_size=25)
 timedate = Label(text=subprocess.run(["date"], capture_output=True).stdout.decode("utf-8"), font_size=18)
 battery = Label(text=
@@ -46,14 +46,14 @@ def update_volume(dt):
     volume_label.text = "Volume: " + str(int(volume.value))
 
 def update_brightness(dt):
-    subprocess.run(["brightnessctl", "set", str(int(bright.value))])
+    subprocess.run(["brightnessctl", "-q", "set", str(int(bright.value))])
     bright_label.text = "Brightness: " + str(int(bright.value))
 
 def update_timedate(dt):
     timedate.text = subprocess.run(["date"], capture_output=True).stdout.decode("utf-8")
 
 def update_battery(dt):
-    battery.text = "Baterry:" + subprocess.run(["cat", "/sys/class/power_supply/BAT0/capacity"], capture_output=True).stdout.decode("utf-8") + subprocess.run(["cat", "/sys/class/power_supply/BAT0/capacity_level"], capture_output=True).stdout.decode("utf-8")
+    battery.text = "Baterry: " + subprocess.run(["cat", "/sys/class/power_supply/BAT0/capacity"], capture_output=True).stdout.decode("utf-8")
 
 class SettingsApp(App):
     def build(self):
