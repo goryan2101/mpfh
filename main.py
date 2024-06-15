@@ -23,13 +23,23 @@ battery = Label(text=
                 subprocess.run(["cat", "/sys/class/power_supply/BAT0/capacity"], capture_output=True).stdout.decode("utf-8") +
                 subprocess.run(["cat", "/sys/class/power_supply/BAT0/capacity_level"], capture_output=True).stdout.decode("utf-8"),
                 font_size=18, size=[640, 18])
+buttons = BoxLayout(orientation="horizontal")
 config_button = Button(text="Open config file", font_size=16)
+shutdown_button = Button(text="Shutdown", font_size=16)
+reboot_button = Button(text="Reboot", font_size=16)
 
 
 def open_config_file(instance):
     subprocess.run(["foot", "nano", "~/.config/hypr/hyprland.conf"])
-
 config_button.bind(on_press=open_config_file)
+
+def shutdown(instance):
+    subprocess.run(["systemctl", "-i", "poweroff"])
+shutdown_button.bind(on_press=shutdown)
+
+def reboot(instance):
+    subprocess.run(["systemctl", "reboot"])
+reboot_button.bind(on_press=reboot)
 
 def update_volume(dt):
     subprocess.run(["pamixer", "--set-volume", str(int(volume.value))])
@@ -52,15 +62,18 @@ class SettingsApp(App):
         main_layout.add_widget(volume_layout)
         bright_layout.add_widget(bright_label)
         bright_layout.add_widget(bright)
+        buttons.add_widget(config_button)
+        buttons.add_widget(shutdown_button)
+        buttons.add_widget(reboot_button)
         main_layout.add_widget(bright_layout)
         main_layout.add_widget(timedate)
         main_layout.add_widget(battery)
-        main_layout.add_widget(config_button)
+        main_layout.add_widget(buttons)
         return main_layout
         
 if __name__ == "__main__":
-    Clock.schedule_interval(update_volume, 1/20)
-    Clock.schedule_interval(update_brightness, 1/20)
+    Clock.schedule_interval(update_volume, 1/30)
+    Clock.schedule_interval(update_brightness, 1/30)
     Clock.schedule_interval(update_timedate, 1)
     Clock.schedule_interval(update_battery, 1/20)
     SettingsApp().run()
